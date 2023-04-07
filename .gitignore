@@ -9,4 +9,4 @@ venv.bak/
 # Text backup files
 *.bak
 
-*.sqlite3
+# *.sqlite3
