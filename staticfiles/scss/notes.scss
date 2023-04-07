@@ -1,0 +1,1598 @@
+@import "colours";
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    display: grid;
+    font-family: sans-serif;
+    place-items: center;
+    background: #f1f1f1;
+    width: 100vw;
+    height: 100vh;
+}
+
+@mixin theme($primary, $secondary, $text, $highlight, $text-color:black, $edit_icons_color:gray, $edit_icons_hover:#dedede97, $line:gray, $control_icons:gray, $control_icons_hover:#dedede97,){
+
+    .container{
+        max-width: 30vw;
+        min-width: 25vw;
+        min-height: 50vh;
+        max-height: fit-content;
+        border-radius: 0.3rem;
+        border: solid 2px black;
+        z-index: 2;
+        position: relative;
+        background: $primary;
+        transition: all ease 0.5s;
+    }
+    
+    .container.menu-shown{
+        overflow: hidden;
+        .tox .tox-edit-area__iframe {
+            opacity: 70%;
+        }
+    
+        .tox:not(.tox-tinymce-inline).tox-tinymce--toolbar-bottom .tox-editor-header {
+            opacity: 70%;
+        }
+    }
+    
+    .controls{
+        display: flex;
+        border-radius: 0.15rem 0.15rem 0 0;
+        justify-content: space-between;
+        z-index: 0;
+        background: $secondary;
+    }
+    
+    .controls div a{
+        padding: 0.5rem 0.75rem;
+        color: $control_icons;
+    }
+    
+    .controls div a.tooltip:hover{
+        background: $control_icons_hover;
+    }
+
+    .new_note{
+        display: flex;
+    }
+
+    .new_note a.tooltip:hover{
+        border-top-left-radius: 0.15rem;
+    }
+    
+    .options-close{
+        display: flex;
+    }
+
+    .options-close #close_btn:hover{
+        border-top-right-radius: 0.15rem;
+    }
+
+    .hidden{
+        display: none;
+    }
+
+    .images-container {
+        .images{
+            display: flex;
+            column-gap: 0.25rem;
+            padding: 0.5rem;
+            width: 100%;
+            flex-basis: 5.4rem;
+            justify-content: space-between;
+    
+            div.image{
+                width: 5.4rem;
+                height: 5.33rem;
+                position: relative;
+    
+                img{
+                    border-radius: 0.2rem;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    object-position: center;
+                }
+    
+                .image-menu{
+                    display: flex;
+                    flex-direction: column;
+                    position: absolute;
+                    justify-content: center;
+                    width: 8.5rem;
+                    height: 0;
+                    top: 2rem;
+                    right: 1rem;
+                    background: #f1f1f1;
+                    opacity: 0;
+                    padding: 0.2rem 0.1rem;
+                    pointer-events: none;
+                    z-index: 5;
+                    transition: top ease-in-out 300ms, opacity ease-in-out 300ms, height ease-in-out 300ms;
+    
+                    a{
+                        width: 100%;
+                        display: flex;
+                        column-gap: 0.5rem;
+                        align-items: center;
+                        padding: 0.5rem 0.75rem;
+                        color: black;
+                        text-decoration: none;
+                        font-size: 0.80rem;
+                    }
+    
+                    a:hover{
+                        background: #d3d3d3;
+                        transition: all ease 0.2s;
+                    }
+    
+                }
+    
+                .image-menu.active{
+                    opacity: 1;
+                    height: 6rem;
+                    pointer-events: auto;
+                }
+            }
+    
+            div{
+                flex-grow: 1;
+            }
+            
+            .extra{
+                border-radius: 0.25rem;
+    
+                div.extra{
+                    overflow: hidden;
+                    width: 100%;
+                    height: 100%;
+                    background: black;
+                    border-radius: 0.2rem;
+                    filter: opacity(60%);
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    margin-right: -50%;
+                    transform: translate(-50%, -50%)
+                }
+    
+    
+                .no_of_extra{
+                    position: absolute;
+                    color: white;
+                    top: 50%;
+                    left: 50%;
+                    margin-right: -50%;
+                    transform: translate(-50%, -50%)
+                }
+    
+            }
+        }
+    
+        .images.single{
+            div.image{
+                height: 9rem;
+            }
+        }
+    }
+
+    #submit, #new_image, #add_image{
+        display: none;
+    }
+    
+    #note:focus{
+        outline: none;
+    }
+    
+    .note-form{
+        overflow: hidden;
+    }
+
+    textarea{
+        line-height: 1.15rem;
+        color: $text-color;
+        width: fit-content;
+        overflow-x: hidden;
+    }
+
+    textarea::-moz-selection{
+        background: $highlight;
+        color: $text;
+    }
+
+    textarea::selection{
+        background: $highlight;
+        color: $text;
+    }
+    
+    .tooltip {
+        position: relative;
+        cursor: context-menu;
+    }
+      
+    .tooltip .tooltip-text {
+        visibility: hidden;
+        background-color: white;
+        border: solid 1px black;
+        color: black;
+        text-align: center;
+        padding: 0.35rem;
+        position: absolute;
+        font-size: 0.7rem;
+        z-index: 1;
+        bottom: 130%;
+        left: 50%;
+        margin-left: -1.5rem;
+    }
+      
+    .tooltip:hover .tooltip-text {
+        visibility: visible;
+        transition-delay: 0.5s;
+    }
+    
+    .menu{
+        position: absolute;
+        width: 100%;
+        height: fit-content;
+        z-index: 2;
+        opacity: 0;
+        height: 0;
+        pointer-events: none;
+        transform: translateY(-1rem);
+        transition: all ease-in-out 300ms; 
+    
+        .themes{
+            display: flex;
+            text-align: center;
+    
+            a{
+                padding: 1rem 0;
+                flex: 14.2857%;
+                color: transparent;
+            }
+    
+            #yellow-theme{
+                background: $yellow_theme_icon;
+            }
+
+            #yellow-theme:hover{
+                background: $yellow_theme_icon_hover;
+            }
+    
+            #green-theme{
+                background: $green_theme_icon;
+            }
+
+            #green-theme:hover{
+                background: $green_theme_icon_hover;
+            }
+            
+            #pink-theme{
+                background: $pink_theme_icon;
+            }
+
+            #pink-theme:hover{
+                background: $pink_theme_icon_hover;
+            }
+    
+            #purple-theme{
+                background: $purple_theme_icon;
+            }
+
+            #purple-theme:hover{
+                background: $purple_theme_icon_hover;
+            }
+    
+            #blue-theme{
+                background: $blue_theme_icon;
+            }
+
+            #blue-theme:hover{
+                background: $blue_theme_icon_hover;
+            }
+    
+            #gray-theme{
+                background: $gray_theme_icon;
+            }
+
+            #gray-theme:hover{
+                background: $gray_theme_icon_hover;
+            }
+    
+            #charcoal-theme{
+                background: $charcoal_theme_icon;
+            }
+
+            #charcoal-theme:hover{
+                background: $charcoal_theme_icon_hover;
+            }
+    
+            #tooltip{
+                position: relative;
+            }
+    
+            .tooltip:hover .tooltip-text{
+                position: absolute;
+                visibility: visible;
+                bottom: 115%;
+                left: 50%;
+            }
+    
+            .charcoal-theme.tooltip:hover .tooltip-text{
+                border: solid 1px black;
+                background: #333333;
+                color: white;
+            }
+        }
+
+        a{
+            text-decoration: none;
+            color: black;
+        }
+    
+        .menu-option{
+            display: flex;
+            column-gap: 1rem;
+            padding: 1rem;
+            background: white;
+        }
+    
+        .menu-option:hover{
+            background: #f1f1f1;
+        }
+
+        .notes-list a{
+            color: black;
+        }
+    
+        .delete-note{
+            color: red;
+            a{
+                color: red;
+            }
+        }
+    
+    }
+    
+    .menu.active{
+        opacity: 1;
+        height: fit-content;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+
+    .tox-tinymce {
+        border: none;
+        border-radius: 0;
+    }
+    
+    .tox .tox-tbtn {
+        color: $edit_icons_color;
+        
+        svg {
+            fill: $edit_icons_color;
+        }
+    }
+
+    .tox .tox-tbtn--enabled {
+        background: $edit_icons_hover;
+        border: 0;
+        color: $edit_icons_color;
+    
+    svg {
+        fill: $edit_icons_color;
+    }
+    }
+    
+    .tox .tox-tbtn--enabled:hover {
+        background: $edit_icons_hover;
+        border: 0;
+        color: $edit_icons_color;
+        fill: $edit_icons_color;
+    }
+    
+    .tox .tox-tbtn:hover {
+        background: $edit_icons_hover;
+    
+    svg {
+        display: block;
+        fill: $edit_icons_color;
+    }
+    }
+
+    .tox .tox-tbtn:focus {
+        background: $edit_icons_hover;
+        border: 0;
+        box-shadow: none;
+    }
+
+    .tox .tox-tbtn:focus:not(.tox-tbtn--disabled) svg {
+        fill: $edit_icons_color;
+        background: none;
+        border: none;
+    }
+
+    .tox .tox-edit-area__iframe {
+        background-color: $primary;
+    }
+
+    .tox:not(.tox-tinymce-inline).tox-tinymce--toolbar-bottom .tox-editor-header {
+        border-top: 1px solid gray;
+        box-shadow: none;
+        border-radius: 0 0 0.15rem 0.15rem;
+    }
+    
+    .tox:not(.tox-tinymce-inline) .tox-editor-header {
+        background-color: $primary;
+        border-bottom: none;
+        box-shadow: 0 2px 2px -2px rgb(34 47 62 / 10%), 0 8px 8px -4px rgb(34 47 62 / 7%);
+        padding: 4px 0;
+        transition: box-shadow .5s;
+    }
+
+    .tox .tox-toolbar, .tox .tox-toolbar__overflow, .tox .tox-toolbar__primary {
+        background-color: $primary; 
+    }
+}
+
+.yellow-theme{
+    @include theme($yellow_theme_primary, $yellow_theme_secondary, $yellow_theme_text, $yellow_theme_highlight);
+
+    .menu{
+        .themes{
+            #yellow-theme{
+                color: black;
+            }
+        }
+    }
+
+    .tox:not(.tox-tinymce-inline).tox-tinymce--toolbar-bottom .tox-editor-header {
+        border-top: 1px solid $yellow_theme_icon_hover;
+        box-shadow: none;
+    }
+}
+
+.green-theme{
+    @include theme($green_theme_primary, $green_theme_secondary, $green_theme_text, $green_theme_highlight, $control_icons_hover: darken(#d7f4d2, 7));
+
+    .menu{
+        .themes{
+            #green-theme{
+                color: black;
+            }
+        }
+    }
+
+    .tox:not(.tox-tinymce-inline).tox-tinymce--toolbar-bottom .tox-editor-header {
+        border-top: 1px solid $green_theme_icon_hover;
+        box-shadow: none;
+    }
+}
+
+.pink-theme{
+    @include theme($pink_theme_primary, $pink_theme_secondary, $pink_theme_text, $pink_theme_highlight, $control_icons_hover: darken(#ffe5ec, 7));
+
+    .menu{
+        .themes{
+            #pink-theme{
+                color: black;
+            }
+        }
+    }
+
+    .tox:not(.tox-tinymce-inline).tox-tinymce--toolbar-bottom .tox-editor-header {
+        border-top: 1px solid $pink_theme_icon_hover;
+        box-shadow: none;
+    }
+}
+
+.purple-theme{
+    @include theme($purple_theme_primary, $purple_theme_secondary, $purple_theme_text, $purple_theme_highlight, $control_icons_hover: lighten(#e1affd, 3));
+
+    .menu{
+        .themes{
+            #purple-theme{
+                color: black;
+            }
+        }
+    }
+
+    .tox:not(.tox-tinymce-inline).tox-tinymce--toolbar-bottom .tox-editor-header {
+        border-top: 1px solid $purple_theme_icon_hover;
+        box-shadow: none;
+    }
+}
+
+.blue-theme{
+    @include theme($blue_theme_primary, $blue_theme_secondary, $blue_theme_text, $blue_theme_highlight, $control_icons_hover: darken(#d0efff, 7));
+
+    .menu{
+        .themes{
+            #blue-theme{
+                color: black;
+            }
+        }
+    }
+
+    .tox:not(.tox-tinymce-inline).tox-tinymce--toolbar-bottom .tox-editor-header {
+        border-top: 1px solid $blue_theme_icon_hover;
+        box-shadow: none;
+    }
+}
+
+.gray-theme{
+    @include theme($gray_theme_primary, $gray_theme_secondary, $gray_theme_text, $gray_theme_highlight, $control_icons_hover: darken(#f1f1f1, 9));
+
+    .menu{
+        .themes{
+            #gray-theme{
+                color: black;
+            }
+        }
+    }
+
+    .tox:not(.tox-tinymce-inline).tox-tinymce--toolbar-bottom .tox-editor-header {
+        border-top: 1px solid $gray_theme_icon_hover;
+        box-shadow: none;
+    }
+}
+
+.charcoal-theme{
+    @include theme($charcoal_theme_primary, $charcoal_theme_secondary, $charcoal_theme_text, $charcoal_theme_highlight, white, darken(#f1f1f1, 3), lighten(gray, 5), lighten(gray, 10), lighten(gray, 30), darken(gray, 10));
+
+    .menu{
+        .themes{
+            #charcoal-theme{
+                color: black;
+            }
+        }
+    }
+
+    .images-container {
+        .images{
+            div.image{    
+                .image-menu{
+                    background: lighten(black, 5);
+    
+                    a{
+                        color: white;
+                    }
+    
+                    a:hover{
+                        background: lighten(black, 28);
+                    }
+    
+                }
+            }
+            
+            
+        }
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: darken(gray, 15);
+        margin-block: 0.2rem;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: $charcoal_theme_highlight;
+        width: 15px;
+    }
+
+    ::-webkit-scrollbar-track{
+        background: black;
+    }
+
+    .tox:not(.tox-tinymce-inline).tox-tinymce--toolbar-bottom .tox-editor-header {
+        border-top: 1px solid $charcoal_theme_icon_hover;
+        box-shadow: none;
+    }
+}
+
+.dark-mode.yellow-theme{
+    @include theme(#333333, #fce205, white, $charcoal_theme_highlight, white, lighten(gray, 25), lighten(#333333, 8), green, black, darken(#fce205, 3));
+
+    .images-container {
+        .images{
+            div.image{    
+                .image-menu{
+                    background: lighten(black, 5);
+    
+                    a{
+                        color: white;
+                    }
+    
+                    a:hover{
+                        background: lighten(black, 28);
+                    }
+    
+                }
+            }
+            
+            
+        }
+    }
+
+    .menu{ 
+
+        .themes{
+            display: flex;
+            text-align: center;
+    
+            a{
+                padding: 1rem 0;
+                flex: 14.2857%;
+                color: transparent;
+            }
+    
+            #yellow-theme{
+                background: $yellow_theme_icon_dark;
+            }
+
+            #yellow-theme:hover{
+                background: $yellow_theme_icon_dark_hover;
+            }
+    
+            #green-theme{
+                background: $green_theme_icon_dark;
+            }
+
+            #green-theme:hover{
+                background: $green_theme_icon_dark_hover;
+            }
+            
+            #pink-theme{
+                background: $pink_theme_icon_dark;
+            }
+
+            #pink-theme:hover{
+                background: $pink_theme_icon_dark_hover;
+            }
+    
+            #purple-theme{
+                background: $purple_theme_icon_dark;
+            }
+
+            #purple-theme:hover{
+                background: $purple_theme_icon_dark_hover;
+            }
+    
+            #blue-theme{
+                background: $blue_theme_icon_dark;
+            }
+
+            #blue-theme:hover{
+                background: $blue_theme_icon_dark_hover;
+            }
+    
+            #gray-theme{
+                background: $gray_theme_icon_dark;
+            }
+
+            #gray-theme:hover{
+                background: $gray_theme_icon_dark_hover;
+            }
+    
+            #charcoal-theme{
+                background: $charcoal_theme_icon_dark;
+            }
+
+            #charcoal-theme:hover{
+                background: $charcoal_theme_icon_dark_hover;
+            }
+    
+            #tooltip{
+                position: relative;
+            }
+    
+            .tooltip:hover .tooltip-text{
+                position: absolute;
+                visibility: visible;
+                bottom: 115%;
+                left: 50%;
+            }
+    
+            .charcoal-theme.tooltip:hover .tooltip-text{
+                border: solid 1px black;
+                background: #333333;
+                color: white;
+            }
+        }
+
+        a{
+            text-decoration: none;
+            color: white;
+        }
+    
+        .menu-option{
+            background: lighten(#333333, 3);
+        }
+    
+        .menu-option:hover{
+            background: lighten(#333333, 6);
+        }
+
+        .notes-list{
+            color: white;
+        }
+    
+        .delete-note{
+            color: white;
+        }
+    
+    }
+
+    .tox:not(.tox-tinymce-inline).tox-tinymce--toolbar-bottom .tox-editor-header {
+        border-top: 1px solid #555555;
+        box-shadow: none;
+        border-radius: 0 0 0.15rem 0.15rem;
+    }
+}
+
+.dark-mode.green-theme{
+    @include theme(#333333, #90ee90, white, $charcoal_theme_highlight, white, lighten(gray, 25), lighten(#333333, 8), green, black, darken(#90ee90, 10));
+
+    .images-container {
+        .images{
+            div.image{    
+                .image-menu{
+                    background: lighten(black, 5);
+    
+                    a{
+                        color: white;
+                    }
+    
+                    a:hover{
+                        background: lighten(black, 28);
+                    }
+    
+                }
+            }
+            
+            
+        }
+    }
+    .menu{ 
+
+        .themes{
+            display: flex;
+            text-align: center;
+    
+            a{
+                padding: 1rem 0;
+                flex: 14.2857%;
+                color: transparent;
+            }
+    
+            #yellow-theme{
+                background: $yellow_theme_icon_dark;
+            }
+
+            #yellow-theme:hover{
+                background: $yellow_theme_icon_dark_hover;
+            }
+    
+            #green-theme{
+                background: $green_theme_icon_dark;
+            }
+
+            #green-theme:hover{
+                background: $green_theme_icon_dark_hover;
+            }
+            
+            #pink-theme{
+                background: $pink_theme_icon_dark;
+            }
+
+            #pink-theme:hover{
+                background: $pink_theme_icon_dark_hover;
+            }
+    
+            #purple-theme{
+                background: $purple_theme_icon_dark;
+            }
+
+            #purple-theme:hover{
+                background: $purple_theme_icon_dark_hover;
+            }
+    
+            #blue-theme{
+                background: $blue_theme_icon_dark;
+            }
+
+            #blue-theme:hover{
+                background: $blue_theme_icon_dark_hover;
+            }
+    
+            #gray-theme{
+                background: $gray_theme_icon_dark;
+            }
+
+            #gray-theme:hover{
+                background: $gray_theme_icon_dark_hover;
+            }
+    
+            #charcoal-theme{
+                background: $charcoal_theme_icon_dark;
+            }
+
+            #charcoal-theme:hover{
+                background: $charcoal_theme_icon_dark_hover;
+            }
+    
+            #tooltip{
+                position: relative;
+            }
+    
+            .tooltip:hover .tooltip-text{
+                position: absolute;
+                visibility: visible;
+                bottom: 115%;
+                left: 50%;
+            }
+    
+            .charcoal-theme.tooltip:hover .tooltip-text{
+                border: solid 1px black;
+                background: #333333;
+                color: white;
+            }
+        }
+
+        a{
+            text-decoration: none;
+            color: white;
+        }
+    
+        .menu-option{
+            background: lighten(#333333, 3);
+        }
+    
+        .menu-option:hover{
+            background: lighten(#333333, 6);
+        }
+
+        .notes-list{
+            color: white;
+        }
+    
+        .delete-note{
+            color: white;
+        }
+    
+    }
+
+    .tox:not(.tox-tinymce-inline).tox-tinymce--toolbar-bottom .tox-editor-header {
+        border-top: 1px solid #555555;
+        box-shadow: none;
+        border-radius: 0 0 0.15rem 0.15rem;
+    }
+}
+
+.dark-mode.pink-theme{
+    @include theme(#333333, lighten(hotpink, 5), white, $charcoal_theme_highlight, white, lighten(gray, 25), lighten(#333333, 8), pink, black, darken(hotpink, 1));
+
+    .images-container {
+        .images{
+            div.image{    
+                .image-menu{
+                    background: lighten(black, 5);
+    
+                    a{
+                        color: white;
+                    }
+    
+                    a:hover{
+                        background: lighten(black, 28);
+                    }
+    
+                }
+            }
+            
+            
+        }
+    }
+
+    .menu{ 
+
+        .themes{
+            display: flex;
+            text-align: center;
+    
+            a{
+                padding: 1rem 0;
+                flex: 14.2857%;
+                color: transparent;
+            }
+    
+            #yellow-theme{
+                background: $yellow_theme_icon_dark;
+            }
+
+            #yellow-theme:hover{
+                background: $yellow_theme_icon_dark_hover;
+            }
+    
+            #green-theme{
+                background: $green_theme_icon_dark;
+            }
+
+            #green-theme:hover{
+                background: $green_theme_icon_dark_hover;
+            }
+            
+            #pink-theme{
+                background: $pink_theme_icon_dark;
+            }
+
+            #pink-theme:hover{
+                background: $pink_theme_icon_dark_hover;
+            }
+    
+            #purple-theme{
+                background: $purple_theme_icon_dark;
+            }
+
+            #purple-theme:hover{
+                background: $purple_theme_icon_dark_hover;
+            }
+    
+            #blue-theme{
+                background: $blue_theme_icon_dark;
+            }
+
+            #blue-theme:hover{
+                background: $blue_theme_icon_dark_hover;
+            }
+    
+            #gray-theme{
+                background: $gray_theme_icon_dark;
+            }
+
+            #gray-theme:hover{
+                background: $gray_theme_icon_dark_hover;
+            }
+    
+            #charcoal-theme{
+                background: $charcoal_theme_icon_dark;
+            }
+
+            #charcoal-theme:hover{
+                background: $charcoal_theme_icon_dark_hover;
+            }
+    
+            #tooltip{
+                position: relative;
+            }
+    
+            .tooltip:hover .tooltip-text{
+                position: absolute;
+                visibility: visible;
+                bottom: 115%;
+                left: 50%;
+            }
+    
+            .charcoal-theme.tooltip:hover .tooltip-text{
+                border: solid 1px black;
+                background: #333333;
+                color: white;
+            }
+        }
+
+        a{
+            text-decoration: none;
+            color: white;
+        }
+    
+        .menu-option{
+            background: lighten(#333333, 3);
+        }
+    
+        .menu-option:hover{
+            background: lighten(#333333, 6);
+        }
+
+        .notes-list{
+            color: white;
+        }
+    
+        .delete-note{
+            color: white;
+        }
+    
+    }
+
+    .tox:not(.tox-tinymce-inline).tox-tinymce--toolbar-bottom .tox-editor-header {
+        border-top: 1px solid #555555;
+        box-shadow: none;
+        border-radius: 0 0 0.15rem 0.15rem;
+    }
+}
+
+.dark-mode.purple-theme{
+    @include theme(#333333, lighten(#af69ef, 5), white, $charcoal_theme_highlight, white, lighten(gray, 25), lighten(#333333, 8), pink, black, darken(#af69ef, 1));
+
+    .images-container {
+        .images{
+            div.image{    
+                .image-menu{
+                    background: lighten(black, 5);
+    
+                    a{
+                        color: white;
+                    }
+    
+                    a:hover{
+                        background: lighten(black, 28);
+                    }
+    
+                }
+            }
+            
+            
+        }
+    }
+
+    .menu{ 
+
+        .themes{
+            display: flex;
+            text-align: center;
+    
+            a{
+                padding: 1rem 0;
+                flex: 14.2857%;
+                color: transparent;
+            }
+    
+            #yellow-theme{
+                background: $yellow_theme_icon_dark;
+            }
+
+            #yellow-theme:hover{
+                background: $yellow_theme_icon_dark_hover;
+            }
+    
+            #green-theme{
+                background: $green_theme_icon_dark;
+            }
+
+            #green-theme:hover{
+                background: $green_theme_icon_dark_hover;
+            }
+            
+            #pink-theme{
+                background: $pink_theme_icon_dark;
+            }
+
+            #pink-theme:hover{
+                background: $pink_theme_icon_dark_hover;
+            }
+    
+            #purple-theme{
+                background: $purple_theme_icon_dark;
+            }
+
+            #purple-theme:hover{
+                background: $purple_theme_icon_dark_hover;
+            }
+    
+            #blue-theme{
+                background: $blue_theme_icon_dark;
+            }
+
+            #blue-theme:hover{
+                background: $blue_theme_icon_dark_hover;
+            }
+    
+            #gray-theme{
+                background: $gray_theme_icon_dark;
+            }
+
+            #gray-theme:hover{
+                background: $gray_theme_icon_dark_hover;
+            }
+    
+            #charcoal-theme{
+                background: $charcoal_theme_icon_dark;
+            }
+
+            #charcoal-theme:hover{
+                background: $charcoal_theme_icon_dark_hover;
+            }
+    
+            #tooltip{
+                position: relative;
+            }
+    
+            .tooltip:hover .tooltip-text{
+                position: absolute;
+                visibility: visible;
+                bottom: 115%;
+                left: 50%;
+            }
+    
+            .charcoal-theme.tooltip:hover .tooltip-text{
+                border: solid 1px black;
+                background: #333333;
+                color: white;
+            }
+        }
+
+        a{
+            text-decoration: none;
+            color: white;
+        }
+    
+        .menu-option{
+            background: lighten(#333333, 3);
+        }
+    
+        .menu-option:hover{
+            background: lighten(#333333, 6);
+        }
+
+        .notes-list{
+            color: white;
+        }
+    
+        .delete-note{
+            color: white;
+        }
+    
+    }
+
+    .tox:not(.tox-tinymce-inline).tox-tinymce--toolbar-bottom .tox-editor-header {
+        border-top: 1px solid #555555;
+        box-shadow: none;
+        border-radius: 0 0 0.15rem 0.15rem;
+    }
+}
+
+.dark-mode.blue-theme{
+    @include theme(#333333, #3cdfff, white, $charcoal_theme_highlight, white, lighten(gray, 25), lighten(#333333, 8), pink, black, darken(#3cdfff, 12));
+
+    .images-container {
+        .images{
+            div.image{    
+                .image-menu{
+                    background: lighten(black, 5);
+    
+                    a{
+                        color: white;
+                    }
+    
+                    a:hover{
+                        background: lighten(black, 28);
+                    }
+    
+                }
+            }
+            
+            
+        }
+    }
+
+    .menu{ 
+
+        .themes{
+            display: flex;
+            text-align: center;
+    
+            a{
+                padding: 1rem 0;
+                flex: 14.2857%;
+                color: transparent;
+            }
+    
+            #yellow-theme{
+                background: $yellow_theme_icon_dark;
+            }
+
+            #yellow-theme:hover{
+                background: $yellow_theme_icon_dark_hover;
+            }
+    
+            #green-theme{
+                background: $green_theme_icon_dark;
+            }
+
+            #green-theme:hover{
+                background: $green_theme_icon_dark_hover;
+            }
+            
+            #pink-theme{
+                background: $pink_theme_icon_dark;
+            }
+
+            #pink-theme:hover{
+                background: $pink_theme_icon_dark_hover;
+            }
+    
+            #purple-theme{
+                background: $purple_theme_icon_dark;
+            }
+
+            #purple-theme:hover{
+                background: $purple_theme_icon_dark_hover;
+            }
+    
+            #blue-theme{
+                background: $blue_theme_icon_dark;
+            }
+
+            #blue-theme:hover{
+                background: $blue_theme_icon_dark_hover;
+            }
+    
+            #gray-theme{
+                background: $gray_theme_icon_dark;
+            }
+
+            #gray-theme:hover{
+                background: $gray_theme_icon_dark_hover;
+            }
+    
+            #charcoal-theme{
+                background: $charcoal_theme_icon_dark;
+            }
+
+            #charcoal-theme:hover{
+                background: $charcoal_theme_icon_dark_hover;
+            }
+    
+            #tooltip{
+                position: relative;
+            }
+    
+            .tooltip:hover .tooltip-text{
+                position: absolute;
+                visibility: visible;
+                bottom: 115%;
+                left: 50%;
+            }
+    
+            .charcoal-theme.tooltip:hover .tooltip-text{
+                border: solid 1px black;
+                background: #333333;
+                color: white;
+            }
+        }
+
+        a{
+            text-decoration: none;
+            color: white;
+        }
+    
+        .menu-option{
+            background: lighten(#333333, 3);
+        }
+    
+        .menu-option:hover{
+            background: lighten(#333333, 6);
+        }
+
+        .notes-list{
+            color: white;
+        }
+    
+        .delete-note{
+            color: white;
+        }
+    
+    }
+
+    .tox:not(.tox-tinymce-inline).tox-tinymce--toolbar-bottom .tox-editor-header {
+        border-top: 1px solid #555555;
+        box-shadow: none;
+        border-radius: 0 0 0.15rem 0.15rem;
+    }
+}
+
+.dark-mode.gray-theme{
+    @include theme(#333333, #d3d3d3, white, $charcoal_theme_highlight, white, lighten(gray, 25), lighten(#333333, 8), pink, black, darken(#d3d3d3, 5));
+
+    .images-container {
+        .images{
+            div.image{    
+                .image-menu{
+                    background: lighten(black, 5);
+    
+                    a{
+                        color: white;
+                    }
+    
+                    a:hover{
+                        background: lighten(black, 28);
+                    }
+    
+                }
+            }
+            
+            
+        }
+    }
+
+    .menu{ 
+
+        .themes{
+            display: flex;
+            text-align: center;
+    
+            a{
+                padding: 1rem 0;
+                flex: 14.2857%;
+                color: transparent;
+            }
+    
+            #yellow-theme{
+                background: $yellow_theme_icon_dark;
+            }
+
+            #yellow-theme:hover{
+                background: $yellow_theme_icon_dark_hover;
+            }
+    
+            #green-theme{
+                background: $green_theme_icon_dark;
+            }
+
+            #green-theme:hover{
+                background: $green_theme_icon_dark_hover;
+            }
+            
+            #pink-theme{
+                background: $pink_theme_icon_dark;
+            }
+
+            #pink-theme:hover{
+                background: $pink_theme_icon_dark_hover;
+            }
+    
+            #purple-theme{
+                background: $purple_theme_icon_dark;
+            }
+
+            #purple-theme:hover{
+                background: $purple_theme_icon_dark_hover;
+            }
+    
+            #blue-theme{
+                background: $blue_theme_icon_dark;
+            }
+
+            #blue-theme:hover{
+                background: $blue_theme_icon_dark_hover;
+            }
+    
+            #gray-theme{
+                background: $gray_theme_icon_dark;
+            }
+
+            #gray-theme:hover{
+                background: $gray_theme_icon_dark_hover;
+            }
+    
+            #charcoal-theme{
+                background: $charcoal_theme_icon_dark;
+            }
+
+            #charcoal-theme:hover{
+                background: $charcoal_theme_icon_dark_hover;
+            }
+    
+            #tooltip{
+                position: relative;
+            }
+    
+            .tooltip:hover .tooltip-text{
+                position: absolute;
+                visibility: visible;
+                bottom: 115%;
+                left: 50%;
+            }
+    
+            .charcoal-theme.tooltip:hover .tooltip-text{
+                border: solid 1px black;
+                background: #333333;
+                color: white;
+            }
+        }
+
+        a{
+            text-decoration: none;
+            color: white;
+        }
+    
+        .menu-option{
+            background: lighten(#333333, 3);
+        }
+    
+        .menu-option:hover{
+            background: lighten(#333333, 6);
+        }
+
+        .notes-list{
+            color: white;
+        }
+    
+        .delete-note{
+            color: white;
+        }
+    
+    }
+
+    .tox:not(.tox-tinymce-inline).tox-tinymce--toolbar-bottom .tox-editor-header {
+        border-top: 1px solid #555555;
+        box-shadow: none;
+        border-radius: 0 0 0.15rem 0.15rem;
+    }
+}
+
+.dark-mode.charcoal-theme{
+    @include theme(#333333, #444444, white, $charcoal_theme_highlight, white, lighten(gray, 25), lighten(#333333, 8), pink, lighten(gray, 25), #555555);
+
+    .images-container {
+        .images{
+            div.image{    
+                .image-menu{
+                    background: lighten(black, 5);
+    
+                    a{
+                        color: white;
+                    }
+    
+                    a:hover{
+                        background: lighten(black, 28);
+                    }
+    
+                }
+            }
+            
+            
+        }
+    }
+
+    .menu{ 
+
+        .themes{
+            display: flex;
+            text-align: center;
+    
+            a{
+                padding: 1rem 0;
+                flex: 14.2857%;
+                color: transparent;
+            }
+    
+            #yellow-theme{
+                background: $yellow_theme_icon_dark;
+            }
+
+            #yellow-theme:hover{
+                background: $yellow_theme_icon_dark_hover;
+            }
+    
+            #green-theme{
+                background: $green_theme_icon_dark;
+            }
+
+            #green-theme:hover{
+                background: $green_theme_icon_dark_hover;
+            }
+            
+            #pink-theme{
+                background: $pink_theme_icon_dark;
+            }
+
+            #pink-theme:hover{
+                background: $pink_theme_icon_dark_hover;
+            }
+    
+            #purple-theme{
+                background: $purple_theme_icon_dark;
+            }
+
+            #purple-theme:hover{
+                background: $purple_theme_icon_dark_hover;
+            }
+    
+            #blue-theme{
+                background: $blue_theme_icon_dark;
+            }
+
+            #blue-theme:hover{
+                background: $blue_theme_icon_dark_hover;
+            }
+    
+            #gray-theme{
+                background: $gray_theme_icon_dark;
+            }
+
+            #gray-theme:hover{
+                background: $gray_theme_icon_dark_hover;
+            }
+    
+            #charcoal-theme{
+                background: $charcoal_theme_icon_dark;
+            }
+
+            #charcoal-theme:hover{
+                background: $charcoal_theme_icon_dark_hover;
+            }
+    
+            #tooltip{
+                position: relative;
+            }
+    
+            .tooltip:hover .tooltip-text{
+                position: absolute;
+                visibility: visible;
+                bottom: 115%;
+                left: 50%;
+            }
+    
+            .charcoal-theme.tooltip:hover .tooltip-text{
+                border: solid 1px black;
+                background: #333333;
+                color: white;
+            }
+        }
+
+        a{
+            text-decoration: none;
+            color: white;
+        }
+    
+        .menu-option{
+            background: lighten(#333333, 3);
+        }
+    
+        .menu-option:hover{
+            background: lighten(#333333, 6);
+        }
+
+        .notes-list{
+            color: white;
+        }
+    
+        .delete-note{
+            color: white;
+        }
+    
+    }
+
+    .tox:not(.tox-tinymce-inline).tox-tinymce--toolbar-bottom .tox-editor-header {
+        border-top: 1px solid #555555;
+        box-shadow: none;
+        border-radius: 0 0 0.15rem 0.15rem;
+    }
+}
+
+@media screen and (max-width: 500px){
+    .yellow-theme, .green-theme, .pink-theme, .purple-theme, .blue-theme, .gray-theme, .charcoal-theme{
+        background: whitesmoke;
+        .container{
+            max-width: 100vw;
+            min-width: 100vw;
+            min-height: fit-content;
+            max-height: fit-content;
+        }
+    }
+
+    .dark-mode.yellow-theme, .dark-mode.green-theme, .dark-mode.pink-theme, .dark-mode.purple-theme, .dark-mode.blue-theme, .dark-mode.gray-theme, .dark-mode.charcoal-theme{
+        background: whitesmoke;
+        .container{
+            max-width: 100vw;
+            min-width: 100vw;
+            min-height: fit-content;
+            max-height: fit-content;
+        }
+    }
+    
+}

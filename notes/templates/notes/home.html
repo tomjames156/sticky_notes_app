@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.6" integrity="sha384-Bj8qm/6B+71E6FQSySofJOUjA/gq330vEqjFx9LakWybUySyI1IQHwPtbTU7bNwx" crossorigin="anonymous"></script>
+    <title>Sticky Notes | Home</title>
+    <script src="{% static 'js/home.js'%}" defer></script>
+</head>
+<body class="{{ theme }}">
+    <div class="container">
+        <div class="controls-container">
+            <div class="controls">
+                <div id="new_note" title="New note">
+                    <a href={% url 'notes:new_note' empty_note.colour_theme %}><i class="fa-solid fa-plus"></i></a>
+                </div>
+                <div class="settings-close">
+                    {% if theme == 'light-mode' %}
+                        <a class="dark" title="Dark Mode" href="{% url 'notes:change_display' 1 %}"><i class="fa-solid fa-moon"></i></a>
+                    {% elif theme == "dark-mode" %}
+                        <a class="light" title="Light Mode" href="{% url 'notes:change_display' 0 %}"><i class="fa-solid fa-sun"></i></a>
+                    {% endif %}
+                    <a title="Close window" id="close_btn"><i class="fa-solid fa-xmark"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="app-title"><a href="{% url 'notes:home' %}">Sticky Notes</a></div>
+        <div class="search-container">
+            <div class="search-box">
+                <form id="search_form" autcomplete="off">
+                    {% csrf_token %}
+                    <input
+                        hx-post={% url 'notes:search' %}
+                        hx-target='.notes-list'
+                        hx-trigger='keyup changed'
+                        type="text" 
+                        name="q" 
+                        id="q" 
+                        placeholder="Search..."
+                        autocomplete="off"
+                        autofocus>
+                    <div>
+                        <a
+                            href={% url 'notes:home' %}
+                            class="clear_search hide">
+                            <i class="fa-solid fa-xmark"></i>
+                        </a>
+                        <button type="submit" class="search_btn">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+                </form>
+                <p id="error_message" class='hide search_text_error'>{{ error_message_enter_text }}</p>
+            </div>
+            <div class="space">
+            </div>
+        </div>
+        <div class="main-content">
+            {% include 'partials/results.html' %}
+        </div>
+    </div>
+</body>
+</html>

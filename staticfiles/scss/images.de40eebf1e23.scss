@@ -1,0 +1,370 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    cursor: context-menu;
+}
+
+.light-mode{
+    background: #292929;
+    width: 100vw;
+    height: 100vh;
+
+    .navbar{
+        background: #010101;
+        color: white;
+        width: 100%;
+        height: 5vh;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        position: relative;
+    
+        .controls{
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+    
+            a{
+                color: white;
+                z-index: 1;
+                text-decoration: none;
+                padding: 0.45rem 0.75rem;
+    
+                i{
+                    z-index: 0;
+                }
+            }
+    
+            a:hover{
+                background: lighten($color: black, $amount: 10);
+            }
+        }
+    
+        .image-menu{
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            width: fit-content;
+            top: 2rem;
+            height: 0rem;
+            pointer-events: none;
+            transform: translateY(-3rem);
+            opacity: 0;
+            right: 0.5rem;
+            z-index: 2;
+            background: #f1f1f1;
+            padding: 0.35rem 0.1rem;
+    
+            > a{
+                text-decoration: none;
+                color: black;
+                font-size: 0.9rem;
+                display: flex;
+                align-items: center;
+                column-gap: 0.5rem;
+                padding: 0.5rem 0.75rem;
+            }
+    
+            a.delete{
+                color: red;
+            }
+    
+            > a:hover{
+                background: #d3d3d3;
+                color: black;
+                transition: all ease 0.1s;
+            }
+        }
+    
+        .image-menu.active{
+            height: fit-content;
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+            transition: all ease-in-out 300ms;
+        }
+    
+        .description{
+            position: absolute;
+            padding: 0.5rem;
+            top: 2rem;
+            opacity: 0;
+            transform: translateY(-3rem);
+            height: 0;
+            pointer-events: none;
+            right: 0.5rem;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            row-gap: 0.5rem;
+            background: #ffffff;
+    
+            form{
+                font-family: sans-serif;
+                display: flex;
+                flex-direction: column;
+                row-gap: 0.75rem;
+    
+                p{
+                    color: black;
+                    font-size: 1rem;
+                    padding-left: 0.25rem;
+                }
+        
+                input{
+                    width: 17rem;
+                    padding: 0.5rem 0.5rem;
+                    border: none;
+                    background: #ddd;
+                    font-size: 0.8rem;
+                    outline: none;
+                }
+        
+                .submit-btns{
+                    display: flex;
+                    column-gap: 0.25rem;
+    
+                    button{
+                        width: 50%;
+                        padding: 0.25rem 0;
+                        border: none;
+                        transition: all ease 0.1s;
+                    }
+        
+                    button:nth-of-type(1){                    
+                        background: #007cbf;
+                        color: white;
+                    }
+    
+                    button:nth-of-type(1):hover{                    
+                        background: lighten($color: #007cbf, $amount: 5);
+                    }
+        
+                    button:nth-of-type(2){
+                        background: #ddd;
+                    }
+        
+                    button:nth-of-type(2):hover{
+                        background: #d3d3d3;
+                    }
+                }
+            }
+        }
+    
+        .description.active{
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+            height: fit-content;
+            transition: all ease-in-out 300ms;
+        }
+    
+        .deletion{
+            position: absolute;
+            top: 2rem;
+            right: 0.5rem;
+            width: 17rem;
+            background: #ffffff;
+            padding: 0.75rem 0.5rem 0.5rem 0.5rem;
+            opacity: 0;
+            height: 0;
+            z-index: 3;
+            pointer-events: none;
+            transform: translateY(-3rem);
+    
+            p{
+                color: black;
+                padding-bottom: 0.75rem;
+                font-size: 0.9rem;
+            }
+    
+            div{
+                display: flex;
+                column-gap: 0.3rem;
+                width: 100%;
+                text-align: center;
+    
+                a{
+                    flex: 50%;
+                    text-decoration: none;
+                    color: black;
+                    transition: all ease 0.1s;
+                    padding: 0.25rem 0;
+                    font-size: 0.85rem;
+                }
+    
+                a:nth-of-type(1){
+                    background: #007cbf;
+                    color: white;
+                }
+    
+                a:nth-of-type(1):hover{
+                    background: lighten($color: #007cbf, $amount: 5);
+                    color: white;
+                }
+    
+                a:nth-of-type(2){
+                    background: #dddddd;
+                }
+    
+                a:nth-of-type(2):hover{
+                    background: #d3d3d3;
+                }
+            }
+        }
+    
+        .deletion.active{
+            opacity: 1;
+            height: fit-content;
+            transform: translateY(0);
+            pointer-events: auto;
+            transition: all ease-in-out 300ms;
+        }
+    }
+    
+    main{
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .image-container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
+        img{
+            height: 100%;
+            width: auto;
+            object-fit: cover;
+        }
+    }
+    
+    .navigate{
+        color: white;
+        display: flex;
+        align-items: center;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        background: none;
+        border: none;
+        text-decoration: none;
+    }
+    
+    .navigate:hover{
+        background: #373737;
+    }
+    
+    .navigate.inactive:hover{
+        background: none;
+    }
+    
+    footer{
+        height: 5vh;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+}
+
+.dark-mode{
+    @extend .light-mode;
+
+    .navbar{
+    
+        .image-menu{
+            background: lighten(black, 10);
+            border: solid 1px black;
+    
+            > a{
+                color: white;
+            }
+    
+            a.delete{
+                color: white;
+            }
+    
+            > a:hover{
+                background: lighten(black, 28);
+                color: white;
+                transition: all ease 0.1s;
+            }
+        }
+    
+        .description{
+            background: lighten(black, 5);
+            border: solid 1px darken(#d3d3d3, 15);
+    
+            form{
+    
+                p{
+                    color: white;
+                }
+        
+                input{
+                    background: lighten(black, 25);
+                    color: white;
+                }
+
+                input::placeholder{
+                    color: #d3d3d3;
+                }
+        
+                .submit-btns{
+        
+                    button:nth-of-type(1){                    
+                        background: #35a0ca;
+                        color: black;
+                    }
+    
+                    button:nth-of-type(1):hover{                    
+                        background: darken(#35a0ca, 5);
+                    }
+        
+                    button:nth-of-type(2){
+                        background: lighten(black, 25);
+                        color: white;
+                    }
+        
+                    button:nth-of-type(2):hover{
+                        background: lighten(black, 20);
+                    }
+                }
+            }
+        }
+    
+        .deletion{
+            background: lighten(black, 5);
+            border: solid 1px darken(#d3d3d3, 15);
+    
+            p{
+                color: white;
+            }
+    
+            div{      
+
+                a:nth-of-type(1){                    
+                    background: #35a0ca;
+                    color: black;
+                }
+
+                a:nth-of-type(1):hover{                    
+                    background: darken(#35a0ca, 5);
+                    color: black;
+                }
+    
+                a:nth-of-type(2){
+                    background: lighten(black, 25);
+                    color: white;
+                }
+    
+                a:nth-of-type(2):hover{
+                    background: lighten(black, 20);
+                }
+            }
+        }
+    }
+}

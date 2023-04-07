@@ -1,0 +1,66 @@
+$yellow_theme_primary: #ffffcc;
+$yellow_theme_secondary: #ffff90;
+$yellow_theme_icon: #fce205;
+$yellow_theme_icon_hover: darken(#fce205, 3);
+$yellow_theme_text: white;
+$yellow_theme_highlight: darken(#fce205, 23);
+$yellow_theme_icon_dark: #fce205;
+$yellow_theme_icon_dark_hover: darken(#fce205, 3);
+
+$green_theme_primary: lighten(#d7f4d2, 4);
+$green_theme_secondary: darken(#d7f4d2, 3);
+$green_theme_icon: darken(#d7f4d2, 5);
+$green_theme_icon_hover: darken(#d7f4d2, 7);
+$green_theme_text: white;
+$green_theme_highlight: #006400b7;
+$green_theme_note_hover: lighten(#d7f4d2, 2);
+$green_theme_icon_dark: #90ee90;
+$green_theme_icon_dark_hover: lighten(#90ee90, 5);
+
+$pink_theme_primary: lighten(#ffe5ec, 1);
+$pink_theme_secondary: darken(#ffe5ec, 4);
+$pink_theme_icon: darken(#ffe5ec, 7);
+$pink_theme_icon_hover: darken(#ffe5ec, 9);
+$pink_theme_text: white;
+$pink_theme_highlight: #a1045aa9;
+$pink_theme_note_hover: darken(#ffe5ec, 2);
+$pink_theme_icon_dark: lighten(hotpink, 5);
+$pink_theme_icon_dark_hover: lighten(hotpink, 10);
+
+$purple_theme_primary: lighten(#e1affd, 12);
+$purple_theme_secondary: lighten(#e1affd, 6);
+$purple_theme_icon: lighten(#e1affd, 4);
+$purple_theme_icon_hover: lighten(#e1affd, 2);
+$purple_theme_text: white;
+$purple_theme_highlight: lighten(#710193ad, 1);
+$purple_theme_note_hover: lighten(#e1affd, 10); 
+$purple_theme_icon_dark: lighten(#af69ef, 5);
+$purple_theme_icon_dark_hover: lighten(#af69ef, 10);
+
+$blue_theme_primary: lighten(#d0efff, 3);
+$blue_theme_secondary: darken(#d0efff, 3);
+$blue_theme_icon: darken(#d0efff, 5);
+$blue_theme_icon_hover: darken(#d0efff, 7);
+$blue_theme_text: #f1f1f1;
+$blue_theme_highlight: darken(#d0efff, 60);
+$blue_theme_note_hover: #d0efff;
+$blue_theme_icon_dark: #3cdfff;
+$blue_theme_icon_dark_hover: lighten(#3cdfff, 10);
+
+$gray_theme_primary: #f1f1f1;
+$gray_theme_secondary: darken(#f1f1f1, 5);
+$gray_theme_icon: lighten(#d3d3d3, 5);
+$gray_theme_icon_hover: lighten(#d3d3d3, 2);
+$gray_theme_text: white;
+$gray_theme_highlight: darken(#d3d3d3, 45);
+$gray_theme_icon_dark: #d3d3d3;
+$gray_theme_icon_dark_hover: lighten(#d3d3d3, 3);
+
+$charcoal_theme_primary: gray;
+$charcoal_theme_secondary: darken(gray, 15);
+$charcoal_theme_icon: gray;
+$charcoal_theme_icon_hover: lighten(gray, 3);
+$charcoal_theme_text: white;
+$charcoal_theme_highlight: lighten(gray, 5);
+$charcoal_theme_icon_dark: #444444;
+$charcoal_theme_icon_dark_hover: lighten(#444444, 5);
