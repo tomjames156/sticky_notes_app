@@ -85,7 +85,7 @@
   background: white;
 }
 .light-mode .search-box button i, .dark-mode .search-box button i {
-  color: pink;
+  color: gray;
 }
 .light-mode input[type=text], .dark-mode input[type=text] {
   width: 100%;
