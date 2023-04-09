@@ -190,5 +190,18 @@
             <button id="add_image" type="submit">Save Image</button> 
         </form>
     </div>
+    <script type="text/javascript">
+        $(document).on('submit', '#note_form', function(e){
+            e.preventDefault()
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'notes:update' note.pk %}",
+                data: {
+                    note: $('#note').val(),
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                },
+            })
+        })
+    </script>
 </body>
 </html>
