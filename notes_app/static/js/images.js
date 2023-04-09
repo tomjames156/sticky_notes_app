@@ -42,9 +42,4 @@ document.addEventListener('click', (e) => {
     if(!e.target.closest('[data-image-menu]') && !e.target.matches('[data-image-menu-btn]') && !e.target.closest('.controls') && !e.target.closest('[data-description]')){
         resetAllMenus()
     }
-    // add another to stop other dialogs from closing
 })
-
-// make menuBtn toggle the active class
-// add the previous and next to context
-// make delete view

@@ -65,25 +65,3 @@ function resetMenus(){
         menuBtn.classList.remove('active');
     }
 }
-
-const darkMode = () => {
-    darkModeBtn.classList.add('hide')
-    lightModeBtn.classList.remove('hide')
-    currentTheme.classList = 'dark-mode'
-    localStorage.setItem('notes_theme', 'dark-mode')
-}
-
-const lightMode = () => {
-    darkModeBtn.classList.remove('hide')
-    lightModeBtn.classList.add('hide')
-    currentTheme.classList = 'light-mode'
-    localStorage.setItem('notes_theme', 'light-mode')
-}
-
-darkModeBtn.addEventListener('click', () => {
-    darkMode()
-})
-
-lightModeBtn.addEventListener('click', () => {
-    lightMode()
-})

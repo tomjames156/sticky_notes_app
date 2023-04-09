@@ -62,10 +62,6 @@ document.addEventListener('mousedown', (e) => {
     if((!e.target.closest('[data-image]') && !e.target.closest('.extra')) || e.button != 2){
         setTimeout(resetMenus, 500)
     }
-    if(e.target.matches('[data-image]')){
-        console.log('yuhh')
-        console.log(e.target)
-    }
 })
 
 const images = document.querySelectorAll('[data-image]')
@@ -81,7 +77,6 @@ for(let i = 0; i < noteImagesDivs.length; i++){
     noteImagesDivs[i].addEventListener('mousedown', (e) => {
         if(e.button == 2){
             resetMenus()
-            console.log(imageMenus[i])
             imageMenus[i].classList.add('active')
         }
     })
