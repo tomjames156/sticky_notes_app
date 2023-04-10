@@ -14,12 +14,12 @@ A live demo of the sticky notes project can be found [here](https://stickynotesa
 
 ### Technologies Used
 <a id="technologies_used"></a>
-Django (4.1.7)
-Python (3.10.5)
-HTML5, CSS3, JavaScript, SASS
-TinyMCE (3.5.0)
-SQLite3 database in development
-PostgreSQL on Railway database in production 
+- Django (4.1.7)
+- Python (3.10.5)
+- HTML5, CSS3, JavaScript, SASS
+- TinyMCE (3.5.0)
+- SQLite3 database in development
+- PostgreSQL on Railway database in production 
 Other packages used are listed in the requirements.txt file
 
 ### Features
@@ -31,9 +31,9 @@ Responsive design: The project is fully responsive and mobile-friendly, ensuring
 
 ### Contact
 <a id="contact"></a>
-- [Twitter](https://twitter.com/tomisnakinwande)
-- [GitHub](https://github.com/tomjames156)
-- [Dev Community](https://dev.to/tomjames156/)
+- [Twitter](https://twitter.com/tomisnakinwande) @tomisnakinwande
+- [GitHub](https://github.com/tomjames156) @tomjames156
+- [Dev Community](https://dev.to/tomjames156/) @tomjames156
 
 ### Project status
 <a id="project_status"></a>
