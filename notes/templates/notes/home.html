@@ -24,7 +24,7 @@
                     {% if theme == 'light-mode' %}
                         <a class="dark" title="Dark Mode" href="{% url 'notes:change_display' 1 %}"><i class="fa-solid fa-moon"></i></a>
                     {% elif theme == "dark-mode" %}
-                        <a class="light" title="Light Mode" href="{% url 'notes:change_display' 0 %}"><i class="fa-solid fa-sun"></i></a>
+                        <a class="light" title="Light Mode" href="{% url 'notes:change_display' 0 %}"><i class="fa-regular fa-sun"></i></a>
                     {% endif %}
                     <a title="Close window" id="close_btn"><i class="fa-solid fa-xmark"></i></a>
                 </div>
