@@ -2,7 +2,7 @@
 This is a full-stack sticky notes project built using Django, a Python web framework. The sticky notes project allows users to create, and manage and virtual sticky notes on a web-based platform. It includes features such as CRUD (Create, Read, Update, Delete) operations for the sticky notes, and a simple and intuitive user interface.
 
 ## Table of Contents
-- [Section 1](#section1)Demo
+- [Demo](#demo)
 <a id="technologies">Technologies Used</a>
 <a id="">Features</a>
 <a id="">Installation</a>
