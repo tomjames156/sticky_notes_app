@@ -3,47 +3,38 @@ This is a full-stack sticky notes project built using Django, a Python web frame
 
 ## Table of Contents
 - [Demo](#demo)
-<a id="technologies">Technologies Used</a>
-<a id="">Features</a>
-<a id="">Installation</a>
-<a id="">Usage</a>
-<a id="">Contact</a>
-<a id="">Project Status</a>
+- [Technologies Used](#technologies_used)
+- [Features](#features)
+- [Contact](#contact)
+- [Project Status](#project_status)
 
 ### Demo
 <a id="demo"></a>
-A live demo of the sticky notes project can be found at https://example.com.
+A live demo of the sticky notes project can be found [here](https://stickynotesapp-production.up.railway.app/)at: https://stickynotesapp-production.up.railway.app/
 
-Technologies Used
-Django (version X.X.X)
-Python (version X.X.X)
-HTML5, CSS3, JavaScript
-Bootstrap (version X.X.X)
-SQLite/PostgreSQL (choose one)
-Features
+### Technologies Used
+<a id="technologies_used"></a>
+Django (4.1.7)
+Python (3.10.5)
+HTML5, CSS3, JavaScript, SASS
+TinyMCE (3.5.0)
+SQLite3 database in development
+PostgreSQL on Railway database in production 
+Other packages used are listed in the requirements.txt file
+
+### Features
+<a id="features"></a>
 User authentication: Users can sign up, log in, and log out to create and manage their own sticky notes.
-CRUD operations for sticky notes: Users can create, read, update, and delete sticky notes, allowing them to easily manage their notes and organize them based on their preferences.
-Simple and intuitive user interface: The sticky notes project features a clean and user-friendly interface that makes it easy for users to create and manage their virtual sticky notes.
+CRUD operations for sticky notes: Users can create, read, update, delete sticky notes, and search for specific notes, allowing them to easily manage their notes.
+Simple and intuitive user interface: The sticky notes app features a clean and user-friendly interface that makes it easy for users to create and manage their virtual sticky notes.
 Responsive design: The project is fully responsive and mobile-friendly, ensuring a seamless experience on different devices and screen sizes.
-Installation
-To set up the sticky notes project locally on your development environment, follow these steps:
 
-Clone the repository: git clone https://github.com/yourusername/sticky-notes-project.git
-Navigate to the project directory: cd sticky-notes-project
-Create and activate a virtual environment (optional): python -m venv venv (for Windows) or python3 -m venv venv (for macOS/Linux), then source venv/bin/activate (for macOS/Linux) or .\venv\Scripts\activate (for Windows)
-Install the dependencies: pip install -r requirements.txt
-Set up the database: python manage.py migrate
-Start the development server: python manage.py runserver
-The sticky notes project should now be running locally at http://localhost:8000.
+### Contact
+<a id="contact"></a>
+- [Twitter](https://twitter.com/tomisnakinwande)
+- [GitHub](https://github.com/tomjames156)
+- [Dev Community](https://dev.to/tomjames156/)
 
-Usage
-After setting up the sticky notes project locally, you can access the following endpoints:
-
-Homepage: http://localhost:8000 - The homepage displays the sticky notes created by the logged-in user.
-Create Sticky Note page: http://localhost:8000/create - Allows users to create a new sticky note by providing a title and content.
-Update Sticky Note page: http://localhost:8000/update/{note_id} - Allows users to update the title and content of an existing sticky note.
-Delete Sticky Note page: http://localhost:8000/delete/{note_id} - Allows users to delete an existing sticky note.
-Admin panel: http://localhost:8000/admin - Provides an interface for managing sticky notes and users. Requires superuser authentication.
-
-Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+### Project status
+<a id="project_status"></a>
+The project is currently in Beta testing phase. It is live on the internet however updates are still being made to it. Development has slowed down significantly because I'm currently balancing being a student with my personal coding hobby.
