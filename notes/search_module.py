@@ -17,13 +17,9 @@ special_chars = {
     '|': '\|',
     '{': '\{',
     '}': '\}',
-    '\\': '\\'
+    '\\': '\\',
+    ' ': '\s'
 }
-
-def regularize_search_text(text):
-    htmlEntitiesRegex = re.compile(r"(&|<|>|\*|\$|\?|\+|\.|\^|\(|\)|\||\[|\]|\{|\}|\\)")
-
-    return htmlEntitiesRegex.sub(lambda x: special_chars[x.group()], text)
 
 def create_regex_pattern(search_query):
     pattern = ''
@@ -32,16 +28,16 @@ def create_regex_pattern(search_query):
         return None
     elif(len(words) == 1):
         word  = words[0]
-        pattern += f"[^</&]("
+        pattern += f"((<\w+>)*"
         for character in word:
             if character in special_chars:
                 character = special_chars[character]
             pattern += f"{character}(</?\w+>|&\w+;)*"
-        pattern += f")[^>;]" 
+        pattern += f")"
     elif(len(words) > 1):
         for index, word in enumerate(words):
             if(index == 0):
-                pattern += f"((</?\w+>|&\w+;)*\s*"
+                pattern += f"((</?\w+>|&\w+;)*"
                 for character in word:
                     if character in special_chars:
                         character = special_chars[character]
@@ -65,7 +61,7 @@ def find_matches(search_query, text):
         return text
     elif(len(words) == 1):
         word  = words[0]
-        pattern += f"([^</]"
+        pattern += f"((<\w+>)*"
         for character in word:
             if character in special_chars:
                 character = special_chars[character]
@@ -107,8 +103,8 @@ def remove_wrong_highlight(text):
     wrongHighlightRegexHTMLEntities3 = re.compile(r"(&)(\w*)<span class='highlight'>(;)</span>")
 
     doubleHightRegex = re.compile(r"((</?span(\sclass='highlight')?>)(</?span(\sclass='highlight')?>))")
-    
-    strongTagsRegex = re.compile(r"(</?s[tron]*)<span class='highlight'>([tron]*)</span>([tron]*g>)")
+
+    strongTagsRegex = re.compile(r"(</?\w*)<span class='highlight'>(\w*)</span>(\w*>)")
 
     removed += wrongHighlightRegexHTMLTags.findall(text)
     fixedHTMLTags = wrongHighlightRegexHTMLTags.sub(r"\1\2\3", text)
@@ -126,6 +122,15 @@ def remove_wrong_highlight(text):
     result = "<p>" + fixedStrongTags
 
     return result, removed
+
+def is_search_result(text):
+    """Checks if a search result was found by checking for span text"""
+    spanRegex = re.compile(r"<span class='highlight'>.*?</span>")
+
+    if spanRegex.findall(text) == []:
+        return False
+    else:
+        return True
 
 def search_note(search_query, text):
     search_result = find_matches(search_query, text)
