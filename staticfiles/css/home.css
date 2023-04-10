@@ -14,7 +14,6 @@
 }
 
 .light-mode, .dark-mode {
-  border: solid 1px green;
   font-family: sans-serif;
   line-height: 1rem;
   background: whitesmoke;
