@@ -78,17 +78,10 @@ for(let i = 0; i < noteImagesDivs.length; i++){
         if(e.button == 2){
             resetMenus()
             imageMenus[i].classList.add('active')
-        }if(e.button == 2){
+        }if(e.button == 1){
             resetMenus()
             imageMenus[i].classList.add('active')
         }
-    })
-}
-
-for(let i = 0; i < noteImagesDivs.length; i++){
-    noteImagesDivs[i].addEventListener('mousedown', (e) => {
-        resetMenus()
-        imageMenus[i].classList.add('active')
     })
 }
 
