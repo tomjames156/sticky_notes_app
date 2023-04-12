@@ -16,7 +16,7 @@
 .light-mode, .dark-mode {
   font-family: sans-serif;
   line-height: 1rem;
-  background: red;
+  background: whitesmoke;
   width: 100vw;
   height: 100vh;
   display: grid;
@@ -25,7 +25,7 @@
 .light-mode .container, .dark-mode .container {
   height: 75vh;
   width: 30vw;
-  background: white;
+  background: green;
   overflow-y: scroll;
   border-radius: 0.25rem;
 }
