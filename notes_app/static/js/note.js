@@ -77,6 +77,7 @@ for(let i = 0; i < noteImagesDivs.length; i++){
     noteImagesDivs[i].addEventListener('mousedown', (e) => {
         if(e.button == 2){
             resetMenus()
+            console.log('luigi')
             imageMenus[i].classList.add('active')
         }
     })

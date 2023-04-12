@@ -16,7 +16,7 @@
 .light-mode, .dark-mode {
   font-family: sans-serif;
   line-height: 1rem;
-  background: whitesmoke;
+  background: red;
   width: 100vw;
   height: 100vh;
   display: grid;
