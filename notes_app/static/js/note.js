@@ -13,8 +13,9 @@ const saving = document.querySelector('[data-saving]')
 const submitBtn = document.getElementById('submit');
 const noteImagesDivs = document.querySelectorAll('[data-image-parent]');
 const imageInput = document.querySelector('#new_image');
-const addImageBtn = document.getElementById('add_image')
-console.log('fish')
+const addImageBtn = document.getElementById('add_image');
+const images = document.querySelectorAll('[data-image]');
+const imageMenus = document.querySelectorAll('[data-image-menu]')
 
 menuBtn.addEventListener('click', () => {
     menu.classList.add('active');
@@ -60,13 +61,10 @@ const submit = () => {
 }
 
 document.addEventListener('mousedown', (e) => {
-    if((!e.target.closest('[data-image]') && !e.target.closest('.extra')) || e.button != 2){
+    if((!e.target.closest('[data-image]') && !e.target.closest('.extra'))){
         setTimeout(resetMenus, 500)
     }
 })
-
-const images = document.querySelectorAll('[data-image]')
-const imageMenus = document.querySelectorAll('[data-image-menu]')
 
 const resetMenus = () => {
     for(let menu of imageMenus){
@@ -74,11 +72,11 @@ const resetMenus = () => {
     }
 }
 
+
 for(let i = 0; i < noteImagesDivs.length; i++){
     noteImagesDivs[i].addEventListener('mousedown', (e) => {
-        if(e.button == 2){
+        if(e.button == 2 || e.button == 0){
             resetMenus()
-            console.log('luigi')
             imageMenus[i].classList.add('active')
         }
     })

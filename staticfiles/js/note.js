@@ -75,19 +75,11 @@ const resetMenus = () => {
 
 for(let i = 0; i < noteImagesDivs.length; i++){
     noteImagesDivs[i].addEventListener('mousedown', (e) => {
-        if(e.button == 2){
+        if(e.button == 2 || e.button == 0){
             resetMenus()
             console.log('luigi')
             imageMenus[i].classList.add('active')
         }
-    })
-}
-
-for(let i = 0; i < noteImagesDivs.length; i++){
-    noteImagesDivs[i].addEventListener('click', () => {
-        console.log('luigi')
-        resetMenus()
-        imageMenus[i].classList.add('active')
     })
 }
 
