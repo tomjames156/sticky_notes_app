@@ -10,6 +10,7 @@
   background: #292929;
   width: 100vw;
   height: 100vh;
+  overflow: hidden;
 }
 .light-mode .navbar, .dark-mode .navbar {
   background: #010101;
@@ -206,6 +207,7 @@
 .light-mode .image-container img, .dark-mode .image-container img {
   height: 100%;
   width: auto;
+  max-width: 90vw;
   object-fit: cover;
 }
 .light-mode .navigate, .dark-mode .navigate {
@@ -232,6 +234,34 @@
   align-items: center;
 }
 
+@media screen and (max-width: 500px) {
+  .light-mode, .dark-mode {
+    width: 100vw;
+    height: 100vh;
+    overflow-x: hidden;
+  }
+  .light-mode main, .dark-mode main {
+    display: flex;
+    justify-content: space-between;
+  }
+  .light-mode .image-container, .dark-mode .image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .light-mode .image-container img, .dark-mode .image-container img {
+    height: auto;
+    max-width: 80vw;
+    object-fit: cover;
+  }
+  .light-mode footer, .dark-mode footer {
+    height: 5vh;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
 .dark-mode .navbar .image-menu {
   background: #1a1a1a;
   border: solid 1px black;

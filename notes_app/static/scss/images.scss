@@ -10,6 +10,7 @@
     background: #292929;
     width: 100vw;
     height: 100vh;
+    overflow: hidden;
 
     .navbar{
         background: #010101;
@@ -237,6 +238,7 @@
         img{
             height: 100%;
             width: auto;
+            max-width: 90vw;
             object-fit: cover;
         }
     }
@@ -267,7 +269,39 @@
         justify-content: center;
         align-items: center;
     }
+}
 
+@media screen and (max-width: 500px){
+    .light-mode{
+        width: 100vw;
+        height: 100vh;
+        overflow-x: hidden;
+
+        main{
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .image-container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        
+            img{
+                height: auto;
+                max-width: 80vw;
+                object-fit: cover;
+            }
+        }
+
+        footer{
+            height: 5vh;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
 }
 
 .dark-mode{
