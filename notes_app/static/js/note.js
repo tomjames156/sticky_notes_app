@@ -14,6 +14,7 @@ const submitBtn = document.getElementById('submit');
 const noteImagesDivs = document.querySelectorAll('[data-image-parent]');
 const imageInput = document.querySelector('#new_image');
 const addImageBtn = document.getElementById('add_image')
+console.log('fish')
 
 menuBtn.addEventListener('click', () => {
     menu.classList.add('active');

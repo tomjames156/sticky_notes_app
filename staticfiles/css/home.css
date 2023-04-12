@@ -25,7 +25,7 @@
 .light-mode .container, .dark-mode .container {
   height: 75vh;
   width: 30vw;
-  background: green;
+  background: white;
   overflow-y: scroll;
   border-radius: 0.25rem;
 }

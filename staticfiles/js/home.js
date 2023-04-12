@@ -7,6 +7,7 @@ const notes = document.querySelectorAll('[data-option-parent]')
 const searchForm = document.getElementById('search_form');
 const error_message = document.getElementById('error_message');
 const currentTheme = document.querySelector("body");
+console.log('fish')
 
 closeBtn.addEventListener('click', () => {
     window.close();
