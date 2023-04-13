@@ -39,7 +39,7 @@
                 <a data-delete-action href="#" onclick="closeImageMenu()" class="delete"><i class="fa-solid fa-trash-can"></i>Delete Image</a>
             </div>
             <div data-description class="description">
-                <form id="description_form" autocomplete="off" method="POST" action="{% url 'notes:describe' note.pk current_index current_image.pk %}">
+                <form id="description_form" autofocus autocomplete="off" method="POST" action="{% url 'notes:describe' note.pk current_index current_image.pk %}">
                     {% csrf_token %}
                     <p>Description</p>
                     <input type="text" name="alt_text" id="alt_text" placeholder="Type a description" value="{{ current_image.alt_text }}" autofocus>
